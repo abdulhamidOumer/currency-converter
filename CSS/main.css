@@ -19,6 +19,8 @@ body{
 .inline{
     display: inline-block;
 }
+
+
 .title{
     color: transparent;
     background: linear-gradient(to right, #159957, #155799);
