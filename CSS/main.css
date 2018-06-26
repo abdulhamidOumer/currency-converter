@@ -39,7 +39,7 @@ body{
 
 .currencyInputs{
     position: relative;
-    height: 70px;
+    height: 40px;
     width: 70%;
     padding-left:10px;
     margin-bottom: 10px;
@@ -48,7 +48,7 @@ body{
     border-radius: 5px;
     margin-left: 10%;
     color: #424242;   
-    font-size: 3vh;
+    font-size: 14pt;
 }
 
 .sections{
