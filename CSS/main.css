@@ -10,7 +10,7 @@ body{
     text-align: center;
     background: transparent;
     width: 90%;
-    top: 8%;
+    top: 0%;
     margin-bottom: 3%; 
     height: inherit;
     left: 5%;
@@ -73,7 +73,7 @@ body{
     background: #eeeeee;;
     border: solid 1px #b8b8b8;
     color: #707070;  
-    font-size: 12pt;
+    font-size: 2.5vh;
 }
 
 #resultText{
