@@ -43,8 +43,9 @@ body{
     width: 70%;
     padding-left:10px;
     margin-bottom: 10px;
-
-    border: none;
+    background: #eeeeee;
+    border: solid 1px #b8b8b8;
+    border-radius: 5px;
     margin-left: 10%;
     color: #424242;   
     font-size: 3vh;
