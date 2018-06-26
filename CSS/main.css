@@ -10,7 +10,7 @@ body{
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
     background: #fff;
     width: 90%;
-    top: 10%;
+    top: 8%;
     margin-bottom: 3%; 
     height: inherit;
     left: 5%;
@@ -42,7 +42,7 @@ body{
     width: 70%;
     padding-left:10px;
     margin-bottom: 10px;
-    
+
     border: none;
     margin-left: 10%;
     color: #424242;   
