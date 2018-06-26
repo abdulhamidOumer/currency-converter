@@ -1,0 +1,15 @@
+{
+    "name": "Currency Converter",
+    "short_name": "Currency Converter",
+    "icons": [{
+      "src": "img/logo.png",
+        "sizes": "128x128",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "/index.html",
+    "gcm_sender_id": "103953800507",
+    "display": "standalone",
+    "background_color": "#FF9800",
+    "theme_color": "#159957"
+  }
