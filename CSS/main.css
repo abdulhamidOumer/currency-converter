@@ -10,8 +10,9 @@ body{
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
     background: #fff;
     width: 90%;
-    top: 9%;
-    height: 82%;
+    top: 10%;
+    margin-bottom: 3%; 
+    height: inherit;
     left: 5%;
 }
 
@@ -49,6 +50,7 @@ body{
 .sections{
     position: relative;
     width: 80%;
+    height: inherit;
     border: solid #155799 1px;
     border-radius: 10px;
     text-align: initial;
@@ -56,11 +58,11 @@ body{
 
 .currencySelecters{
     position: relative;
-    float: right;
     margin-right: 7%;
-    height: 70px;
+    height: 40px;
     margin-bottom: 1%;
-    width: 10%;
+    width: 85px;
+    margin-left: 2%;
     border-radius: 5px;
     background: #159957;
     color: #fff;  
@@ -73,7 +75,7 @@ body{
     border-radius: 5px;
     background: linear-gradient(to right, #159957, #155799);
     color: #fff;
-    height: 10%;
+    height: 60px;
     width: 25%;
     font-size: 100%;
     bottom: 3%;
