@@ -1,6 +1,6 @@
 body{
     background: linear-gradient(to right, #159957, #155799);
-    
+
 }
 
 #mainContainer{
@@ -52,7 +52,7 @@ body{
 
 .sections{
     position: relative;
-    width: 80%;
+    width: 100%;
     height: inherit;
     background: #ffffff;
     border: solid #ffffff 1px;
@@ -94,7 +94,7 @@ body{
     color: #159957;
     font-weight: bold;
     height: 60px;
-    width: 250px;
+    width: 270px;
     font-size: 100%;
     margin-bottom: 1%;
     cursor: pointer;
