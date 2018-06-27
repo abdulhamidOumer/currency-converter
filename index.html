@@ -9,10 +9,13 @@
     <link rel="stylesheet" href="CSS/main.css">
     <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet'>
     <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <title>Currency Converter</title>
 </head>
 <body>
+    <div id="loadingContainer">
+        <div id="loader"></div>
+    </div>
+    
     <div id="mainContainer">
         <h1 class="title">Currency Converter</h1>
 
@@ -31,9 +34,9 @@
             <h3 class="boxTitle">To Currency</h3>
             <br>
             <select name="toCurrency" id="toCurrency" class="currencySelecters inline">
-                <option value="etb">ETB</option>
+                
             </select>
-            <h3 class="inline" id="resultText">0.00 ETB</h3>
+            <h3 class="inline" id="resultText"></h3>
             
         </div><br>
 
