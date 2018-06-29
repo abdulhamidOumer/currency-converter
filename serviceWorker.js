@@ -1,7 +1,7 @@
 let currentCache = 'cc-static-v1';
 
 let resourcesToCache = [
-    'index.html',
+    'currency-converter/',
     'JS/main.js',
     'CSS/main.css',
     'img/logo.png'
