@@ -10,7 +10,7 @@ const registerServiceWorker = ()=>{
         return
     }
 
-    navigator.serviceWorker.register('/serviceWorker.js').then(register=>{
+    navigator.serviceWorker.register('serviceWorker.js').then(register=>{
         console.log(`Registered at scope ${register.scope}`);
 
         if(!navigator.serviceWorker.controller) return;
