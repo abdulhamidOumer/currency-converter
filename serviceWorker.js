@@ -1,7 +1,7 @@
 let currentCache = 'cc-static-v1';
 
 let resourcesToCache = [
-    
+    '/'
 ];
 
 self.addEventListener('install',evnt=>{
