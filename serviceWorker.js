@@ -36,8 +36,7 @@ self.addEventListener('fetch',evnt=>{
     console.log(requesterURL.pathname);
     if(requesterURL.origin === location.origin){
         if (requesterURL.pathname === '/' || requesterURL === '/currency-converter/') {
-            evnt.respondWith(caches.match('index.html'));
-            return;
+            return evnt.respondWith(caches.match('index.html'));
           }
         evnt.respondWith(
             caches.match(evnt.request).then(res=>{
