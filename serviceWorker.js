@@ -1,7 +1,7 @@
 let currentCache = 'cc-static-v1';
 
 let resourcesToCache = [
-    'currency-converter/',
+    '',
     'JS/main.js',
     'CSS/main.css',
     'img/logo.png'
@@ -33,7 +33,7 @@ self.addEventListener('activate', evnt=>{
 
 self.addEventListener('fetch',evnt=>{
     const requesterURL = new URL(evnt.request.url);
-
+    console.log(requesterURL);
     if(requesterURL.origin === location.origin){
         evnt.respondWith(
             caches.match(evnt.request).then(res=>{
