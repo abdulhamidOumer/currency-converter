@@ -1,7 +1,7 @@
 let currentCache = 'cc-static-v1';
 
 let resourcesToCache = [
-    '',
+    'index.html',
     'JS/main.js',
     'CSS/main.css',
     'img/logo.png'
@@ -33,8 +33,12 @@ self.addEventListener('activate', evnt=>{
 
 self.addEventListener('fetch',evnt=>{
     const requesterURL = new URL(evnt.request.url);
-    console.log(requesterURL);
+    console.log(requesterURL.pathname);
     if(requesterURL.origin === location.origin){
+        if (requestUrl.pathname === '/') {
+            event.respondWith(caches.match('index.html'));
+            return;
+          }
         evnt.respondWith(
             caches.match(evnt.request).then(res=>{
                 if(res) return res;
