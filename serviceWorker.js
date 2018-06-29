@@ -1,4 +1,4 @@
-let currentCache = 'cc-static-v1';
+let currentCache = 'cc-static-v2';
 
 let resourcesToCache = [
     'index.html',
@@ -36,7 +36,7 @@ self.addEventListener('fetch',evnt=>{
     console.log(requesterURL.pathname);
     if(requesterURL.origin === location.origin){
         if (requesterURL.pathname === '/' || requesterURL === '/currency-converter/') {
-            event.respondWith(caches.match('index.html'));
+            evnt.respondWith(caches.match('index.html'));
             return;
           }
         evnt.respondWith(
