@@ -1,10 +1,10 @@
 let currentCache = 'cc-static-v2';
 
 let resourcesToCache = [
-    'index.html',
-    'JS/main.js',
-    'CSS/main.css',
-    'img/logo.png'
+    './',
+    './JS/main.js',
+    './CSS/main.css',
+    './img/logo.png'
 ];
 
 self.addEventListener('install',evnt=>{
@@ -35,9 +35,6 @@ self.addEventListener('fetch',evnt=>{
     const requesterURL = new URL(evnt.request.url);
     console.log(requesterURL.pathname);
     if(requesterURL.origin === location.origin){
-        if (requesterURL.pathname === '/' || requesterURL === '/currency-converter/') {
-            return evnt.respondWith(caches.match('index.html'));
-          }
         evnt.respondWith(
             caches.match(evnt.request).then(res=>{
                 return res|| fetch(evnt.request);
