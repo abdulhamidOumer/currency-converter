@@ -40,8 +40,7 @@ self.addEventListener('fetch',evnt=>{
           }
         evnt.respondWith(
             caches.match(evnt.request).then(res=>{
-                if(res) return res;
-                return fetch(evnt.request);
+                return res|| fetch(evnt.request);
             })
         );
     }
