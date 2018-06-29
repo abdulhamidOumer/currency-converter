@@ -1,10 +1,10 @@
-let currentCache = 'cc-static-v3';
+let currentCache = 'cc-static-v2';
 
 let resourcesToCache = [
     'index.html',
-    'main.js',
-    'main.css',
-    'logo.png'
+    'JS/main.js',
+    'CSS/main.css',
+    'img/logo.png'
 ];
 
 self.addEventListener('install',evnt=>{
