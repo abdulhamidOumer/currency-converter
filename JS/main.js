@@ -1,6 +1,64 @@
 const currencyDropDowns = document.getElementsByClassName('currencySelecters');
 const resultText = document.getElementById('resultText');
 const convertButton = document.getElementById('convertButton');
+const toCurrencyDropDown = document.getElementById('toCurrency');
+
+
+const registerServiceWorker = ()=>{
+    if(!navigator.serviceWorker){
+        console.log("Service Worker not supported");
+        return
+    }
+
+    navigator.serviceWorker.register('/serviceWorker.js').then(register=>{
+        console.log(`Registered at scope ${register.scope}`);
+
+        if(!navigator.serviceWorker.controller) return;
+
+        if(register.waiting){
+            handleSwUpdate(register.waiting);
+            return
+        }
+
+        if(register.installing){
+            swInstallingTracker(register.installing);
+            return;
+        }
+
+        register.addEventListener('updatefound',()=>{
+            swInstallingTracker(register.installing);
+        });
+
+
+
+    }).catch(error=>{
+        console.log(`Service Worker Registeration Failed:\n${error}`);
+    });
+
+
+    
+    navigator.serviceWorker.addEventListener('controllerchange', function() {
+        snackbar('NORMAL','Update Avialable. Refreh to get the new look.');
+        setTimeout(()=>{snackbar('HIDE')},4000);    
+    });
+
+}
+
+
+
+const handleSwUpdate = (sw)=>{
+    sw.postMessage({action:'skipWaitingState'});
+}
+
+
+const swInstallingTracker = (sw)=>{
+    sw.addEventListener('statechange',()=>{
+        if(sw.state === 'installed'){
+            handleSwUpdate(sw);
+        }
+    });
+}
+
 
 const loading = (property)=>{
     const loadingContainer = document.getElementById('loadingContainer');
@@ -50,6 +108,7 @@ const populateDropDown = ()=>{
             }
 
             editResultText('0.00');
+            registerServiceWorker();
             loading('HIDE');
         })
     });
@@ -86,8 +145,33 @@ const calaculateCurrency = (amount)=>{
     });
 }
 
-populateDropDown();
+function snackbar(type,message=''){
+    const snackbar = document.getElementById('snackbar');
+    const snackbarSpinner = document.getElementById('snackbarLoader');
+    const snackbarMessage = document.getElementById('snackbarMessage');
+    switch(type){
+        case 'NORMAL':{
+            snackbar.style.display = 'block';
+            snackbarMessage.innerText = message;
+            break;
+        }
+        case 'WITH_SPINNER':{
+            snackbar.style.display = 'block';
+            snackbarSpinner.style.display = 'block';
+            snackbarMessage.innerText = message;
+            break;
+        }
+        case 'HIDE':{
+            snackbar.style.display = 'none';
+            snackbarSpinner.style.display = 'none';
+            break;
+        }
 
+    }
+    return;
+}
+
+populateDropDown();
 
 convertButton.onclick = ()=>{
     const amountText = document.getElementById('fromInput').value;
@@ -96,4 +180,8 @@ convertButton.onclick = ()=>{
         floatAmount = 0;
 
     calaculateCurrency(floatAmount);
+}
+
+toCurrencyDropDown.onchange = ()=>{
+    editResultText('0.00');
 }
