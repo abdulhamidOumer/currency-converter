@@ -74,7 +74,7 @@ const registerServiceWorker = ()=>{
 
 
     
-    navigator.serviceWorker.addEventListener('controllerchange', function() {
+    navigator.serviceWorker.addEventListener('controllerchange', ()=> {
         snackbar('NORMAL','Update Avialable. Refreh to get the new look.');
         setTimeout(()=>{snackbar('HIDE')},4000);    
     });
@@ -132,7 +132,7 @@ const populateCurrenciestore = (showLoading=true, dropDown = false)=>{
     setTimeout(()=>{snackbar('HIDE')},7000);
     fetch('https://free.currencyconverterapi.com/api/v5/currencies',{method:"GET",
     headers:{'Accept':'application/json','Content-Type':'application/json'},
-    }).then(function(response){
+    }).then((response)=>{
         response.json().then(res => {
 
             let noError = true;
@@ -186,7 +186,7 @@ const populateOfflineCurrencies = ()=>{
         const store = transaction.objectStore('converted-currencies');
 
         return store.openCursor();
-    }).then(function recurseCurrencies(cursor){
+    }).then(recurseCurrencies=(cursor)=>{
         if(!cursor) return;
         const currency = cursor.value;
         
@@ -251,7 +251,7 @@ const populateDropDown = ()=>{
         const store = transaction.objectStore('currencies');
 
         return store.openCursor();
-    }).then(function recurseCurrencies(cursor){
+    }).then(recurseCurrencies=(cursor)=>{
         if(!cursor) return;
         const currency = cursor.value;
         for(let i=0;i < currencyDropDowns.length; i++ ){
@@ -297,7 +297,7 @@ const calaculateCurrencyOnline = (amount)=>{
     loading('SHOW');
     fetch(url,{method:"GET",
     headers:{'Accept':'application/json','Content-Type':'application/json'},
-    }).then(function(response){
+    }).then((response)=>{
         response.json().then(res => {
             const value = res.results[query].val * amount;
             editResultText(value.toFixed(2));
@@ -379,7 +379,7 @@ const updateFromQuery = (queries)=>{
     snackbar('WITH_SPINNER','Updating Offline Currencies');
     fetch(url,{method:"GET",
     headers:{'Accept':'application/json','Content-Type':'application/json'},
-    }).then(function(response){
+    }).then((response)=>{
         response.json().then(res => {
             for(let i=0; i<queries.length; i++){
                     const value = res.results[queries[i]].val;
