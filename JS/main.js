@@ -315,6 +315,10 @@ const calaculateCurrencyOnline = (amount)=>{
             populateOfflineCurrencies();
             loading('HIDE');
         })
+    }).catch(()=>{
+        loading('HIDE');
+        snackbar('NORMAL','A network Error occured!!','red');
+        setTimeout(()=>{snackbar('HIDE')},4000);
     });
 }
 
@@ -408,6 +412,10 @@ const updateFromQuery = (queries)=>{
             })
             
         })
+    }).catch(()=>{
+        loading('HIDE');
+        snackbar('NORMAL','A network Error occured!!','red');
+        setTimeout(()=>{snackbar('HIDE')},4000);
     });
 }
 
