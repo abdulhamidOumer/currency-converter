@@ -1,7 +1,8 @@
 let currentCache = 'cc-static-v1';
-//updates
+
 let resourcesToCache = [
     './',
+    './index.html',
     './JS/main.js',
     './CSS/main.css',
     './img/logo.png',
