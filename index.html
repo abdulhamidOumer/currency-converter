@@ -19,6 +19,21 @@
         <p id="snackbarMessage">Getting today's exchange rates for offline use.</p>
         <div id="snackbarLoader"></div>
     </div>
+
+    <div id="offlineCurrenciesContainer">
+        
+        <div id="currenciesList">
+            <h3 class="currenciesListTitle">Offline Currecies</h3>
+            <p class="currenciesListTitle">This are currencies you can use off-line.It contains 30 of the recent currencies you used. Note that we will try to update them every 2 hours for accuracy purposes.</p>
+            <div id="lists">
+                
+                
+            </div>
+              
+              <br>
+              <button id="closeButton">Close</button>
+        </div>
+    </div>
     
     <div id="mainContainer">
         <h1 class="title">Currency Converter</h1>
@@ -46,6 +61,9 @@
 
         <button id="convertButton">Convert</button>
     </div>
+
+    <button id="showOfflineCurrencies"><img src="img/button.png" alt="" srcset="" class="buttonImg"></button>
 </body>
+<script src="idb/idb.js"></script>
 <script src="JS/main.js"></script>
 </html>
