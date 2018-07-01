@@ -47,6 +47,7 @@ self.addEventListener('fetch',evnt=>{
     }
 });
 
+//Skips waiting state of the service worker when skipwaiting message is recieved from the main JS file
 self.addEventListener('message',(evnt)=>{
     if(evnt.data.action === 'skipWaitingState'){
         self.skipWaiting();

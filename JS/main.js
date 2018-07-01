@@ -8,24 +8,28 @@ const offlineCurrenciesList = document.getElementById('lists');
 const closeButton = document.getElementById('closeButton');
 
 
+//A function to run all the required actions when the app runs
 const runApp = ()=>{
     registerServiceWorker();
     populateDropDown();
     handleImportantUpdates();
+    
     setInterval(()=>{
-        handleImportantUpdates();
+        handleImportantUpdates(); //Runs every two hour to check for currency change updates
     }, 2000*3600);
 }
 
-
-closeButton.onclick = ()=>{
-    offlineCurrenciesContainer.style.display = "none";
-}
-
+//Shows hidden offline currency container
 offlineCurrenciesButton.onclick = ()=>{
     offlineCurrenciesContainer.style.display = "block";
 }
 
+//Hides offline currency container
+closeButton.onclick = ()=>{
+    offlineCurrenciesContainer.style.display = "none";
+}
+
+//Runs the required function to convert from one currency to another
 convertButton.onclick = ()=>{
     const amountText = document.getElementById('fromInput').value;
     let floatAmount = parseFloat(amountText);
@@ -35,15 +39,17 @@ convertButton.onclick = ()=>{
     calaculateCurrency(floatAmount);
 }
 
+//Displays the currency type on page when a user chosses one
 toCurrencyDropDown.onchange = ()=>{
     editResultText('0.00');
 }
 
 
-
+//Registers service worker to the site
 const registerServiceWorker = ()=>{
     if(!navigator.serviceWorker){
         console.log("Service Worker not supported");
+         //Stops here if browser doesn't support service worker
         return
     }
 
@@ -52,11 +58,13 @@ const registerServiceWorker = ()=>{
 
         if(!navigator.serviceWorker.controller) return;
 
+        //Runs handleSwUpdate() function when service worker is updated and on waiting state
         if(register.waiting){
             handleSwUpdate(register.waiting);
             return
         }
 
+        
         if(register.installing){
             swInstallingTracker(register.installing);
             return;
@@ -73,8 +81,8 @@ const registerServiceWorker = ()=>{
     });
 
 
-    
     navigator.serviceWorker.addEventListener('controllerchange', ()=> {
+        //Displays the following messege when there is an update avialable or when serviceworker is changed
         snackbar('NORMAL','Update Avialable. Refreh to get the new look.');
         setTimeout(()=>{snackbar('HIDE')},4000);    
     });
@@ -82,26 +90,37 @@ const registerServiceWorker = ()=>{
 }
 
 
+//Creates the required indexDb databases an stores to run the app offline
 const currenciesDb = idb.open('currency-converter-db',1,(upgradeDb)=>{
     const oldestVersion = upgradeDb.oldVersion;
     switch(oldestVersion){
         case 0:{
+            //Store To Hold all the currencies avialable(updated every two hours)
             const currencyStore = upgradeDb.createObjectStore('currencies',{keyPath:"currencyName"});
+            
+            //Store To Hold Exchange rates and currencies that a user has converted(updated every two hours)
             const converted_currencies = upgradeDb.createObjectStore('converted-currencies',{keyPath:"query"});
+            
+            //Holds the last time the currency store was updated. useful to notify users if store wasn't updated for a long time
             upgradeDb.createObjectStore('stores-time-line',{keyPath:"storeName"});
 
+            //Index to retrive information by id of currencies
             currencyStore.createIndex('id','id');
+
+            ////Index to retrive information by date for the converted_currencies store
             converted_currencies.createIndex('by-date', 'lastUpdated');
         }
     }
     
 });
 
+//Sends a message to the serviceworker to skipwaiting
 const handleSwUpdate = (sw)=>{
     sw.postMessage({action:'skipWaitingState'});
 }
 
 
+//Checks whether the serviceworker finished installing and runs handleSwUpdate()
 const swInstallingTracker = (sw)=>{
     sw.addEventListener('statechange',()=>{
         if(sw.state === 'installed'){
@@ -111,6 +130,7 @@ const swInstallingTracker = (sw)=>{
 }
 
 
+//Function to show and hide loading container to user
 const loading = (property)=>{
     const loadingContainer = document.getElementById('loadingContainer');
     switch(property){
@@ -125,6 +145,7 @@ const loading = (property)=>{
     }
 }
 
+//Fetches currencies from api and saves it to the currencies store
 const populateCurrenciestore = (showLoading=true, dropDown = false)=>{
     if(showLoading) loading('SHOW');
 
@@ -177,6 +198,7 @@ const populateCurrenciestore = (showLoading=true, dropDown = false)=>{
     });
 }
 
+//Gets the offline currencies from the offline_currencies store and adds it to the user interface
 const populateOfflineCurrencies = ()=>{
     const mainContainer = document.getElementById('lists');
     mainContainer.innerHTML = "";
@@ -244,6 +266,8 @@ const populateOfflineCurrencies = ()=>{
     });
 }
 
+
+//Gets currencies from currencies store and adds it to the user interface
 const populateDropDown = ()=>{
     let currenciesCount = 0;
     currenciesDb.then((db)=>{
@@ -275,12 +299,15 @@ const populateDropDown = ()=>{
 
 }
 
+//A function to show the converted currency result on the user interface
 const editResultText = (value)=>{
     const toCurrency = document.getElementById('toCurrency');
     const toCurrencyValue = toCurrency.options[toCurrency.selectedIndex].value;
     resultText.innerText = `${value} ${toCurrencyValue}`;
 }
 
+
+//Fetch the exchange rate from api and shows to the user then saves it to the offline_currencies store
 const calaculateCurrencyOnline = (amount)=>{
     
     const toCurrency = document.getElementById('toCurrency');
@@ -322,6 +349,8 @@ const calaculateCurrencyOnline = (amount)=>{
     });
 }
 
+
+//Tries to get exchange rate from offline_currencies store and if not found runs the calaculateCurrencyOnline() function
 const calaculateCurrency = (floatAmount)=>{
     const toCurrency = document.getElementById('toCurrency');
     const toCurrencyValue = toCurrency.options[toCurrency.selectedIndex].value;
@@ -350,6 +379,8 @@ const calaculateCurrency = (floatAmount)=>{
     })
 }
 
+
+//Function to show and hide messages on snackbar
 const snackbar = (type,message='',color='white')=>{
     const snackbar = document.getElementById('snackbar');
     const snackbarSpinner = document.getElementById('snackbarLoader');
@@ -377,6 +408,8 @@ const snackbar = (type,message='',color='white')=>{
     }
     return;
 }
+
+//Accepts a single or two queries then fetchs result from api. (Useful for updates that run on 2 hours difference)
 const updateFromQuery = (queries)=>{
     const url = `https://free.currencyconverterapi.com/api/v5/convert?q=${queries}`;
     let results = {};
@@ -419,6 +452,8 @@ const updateFromQuery = (queries)=>{
     });
 }
 
+
+//A function to calculate the last time a user updated information from online, If it has been more than 3 hours notifies user to get online
 const handleLastUpdatedTime = ()=>{
     currenciesDb.then((db)=>{
         const transaction = db.transaction('stores-time-line');
@@ -437,6 +472,7 @@ const handleLastUpdatedTime = ()=>{
     })
 }
 
+//Iterates on items in the offline_currencies store and gets updates for every item.
 const upateOfflineCurrencies = (length)=>{
     let current_queries = [];
     let count = 0;
@@ -462,6 +498,7 @@ const upateOfflineCurrencies = (length)=>{
     })
 }
 
+//Deletes items in the oldest items in the offline_currencies store and runs upateOfflineCurrencies funcion on the rest of items
 const handleOfflineCurrencies = ()=>{
     currenciesDb.then((db)=>{
         const transaction = db.transaction('converted-currencies');
@@ -486,12 +523,14 @@ const handleOfflineCurrencies = ()=>{
     });
 }
 
+//Runs important updates on the stores
 const handleImportantUpdates = ()=>{
     populateCurrenciestore(false);
     handleOfflineCurrencies();
     
 }
 
+//Run the App
 runApp();
 
 

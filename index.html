@@ -6,20 +6,24 @@
     <meta name="theme-color" content="#159957">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="CSS/main.css">
-    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet'>
     <link rel="shortcut icon" href="./img/logo.png" type="image/x-icon">
     <title>Currency Converter</title>
+    <link rel="stylesheet" href="CSS/main.css">
+    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet'>
 </head>
 <body>
+    <!--A hidden container to hold loading state-->
     <div id="loadingContainer">
         <div id="loader"></div>
     </div>
+
+    <!--Snackbar to show notification to uers-->
     <div id="snackbar">
         <p id="snackbarMessage">Getting today's exchange rates for offline use.</p>
         <div id="snackbarLoader"></div>
     </div>
 
+    <!--A hidden container to hold offline currencies user can use-->
     <div id="offlineCurrenciesContainer">
         
         <div id="currenciesList">
@@ -35,6 +39,7 @@
         </div>
     </div>
     
+    <!--A container to hold the main part of the app i.e currency inputs etc...-->
     <div id="mainContainer">
         <h1 class="title">Currency Converter</h1>
 
@@ -62,6 +67,7 @@
         <button id="convertButton">Convert</button>
     </div>
 
+    <!--Fixed circular action button to show offline currencies-->
     <button id="showOfflineCurrencies"><img src="img/button.png" alt="" srcset="" class="buttonImg"></button>
 </body>
 <script src="idb/idb.js"></script>
