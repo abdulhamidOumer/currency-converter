@@ -2,7 +2,7 @@
 
 ## About
 An app made for the 2018 ALC with Google scholarship challenge 2.0 AKA 7daysofcode.
-A currency converter PWA that uses offline first strategies.
+A currency converter PWA that uses offline first strategies. The app was made fully using vanila JavaScript and used the idbPromises library to handle IndexDb operations.
 
 ![Demo Picture](Demo/Demo.png)
 
