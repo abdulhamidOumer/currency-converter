@@ -1,5 +1,5 @@
 let currentCache = 'cc-static-v1';
-
+//update
 let resourcesToCache = [
     './',
     './index.html',
