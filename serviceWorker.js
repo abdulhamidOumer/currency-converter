@@ -1,4 +1,4 @@
-let currentCache = 'cc-static-v2';
+let currentCache = 'cc-static-v1';
 
 let resourcesToCache = [
     './',
@@ -7,7 +7,8 @@ let resourcesToCache = [
     './CSS/main.css',
     './img/logo.png',
     './img/button.png',
-    './idb/idb.js'
+    './idb/idb.js',
+    './manifest.json'
 ];
 
 self.addEventListener('install',evnt=>{
