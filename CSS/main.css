@@ -113,13 +113,18 @@ body{
 
 #resultText{
     position: relative;
-    height: 50px;
+    height: 20px;
     width: 70%;
     padding-left:10px;
     border: none;
     margin-left: 10%;
     color: #707070;   
     font-size: 14pt;
+}
+
+#exchangeRateText{
+    margin-left:10%;
+    color: #159957;
 }
 
 #convertButton{
@@ -136,6 +141,7 @@ body{
     margin-bottom: 1%;
     cursor: pointer;
 }
+
 
 .boxTitle{
     color: #707070;

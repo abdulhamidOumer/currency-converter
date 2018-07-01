@@ -306,6 +306,19 @@ const editResultText = (value)=>{
     resultText.innerText = `${value} ${toCurrencyValue}`;
 }
 
+//A function to show the exchange rate on the user interface
+const editExchangeText = (value)=>{
+    const toCurrency = document.getElementById('toCurrency');
+    const toCurrencyValue = toCurrency.options[toCurrency.selectedIndex].value;
+
+    const fromCurrency = document.getElementById('fromCurrency');
+    const fromCurrencyValue = fromCurrency.options[fromCurrency.selectedIndex].value;
+
+    const exchangeRateText = document.getElementById('exchangeRateText');
+    exchangeRateText.innerText = ` 1 ${fromCurrencyValue} equals ${value} ${toCurrencyValue}`;
+}
+
+
 
 //Fetch the exchange rate from api and shows to the user then saves it to the offline_currencies store
 const calaculateCurrencyOnline = (amount)=>{
@@ -328,6 +341,8 @@ const calaculateCurrencyOnline = (amount)=>{
         response.json().then(res => {
             const value = res.results[query].val * amount;
             editResultText(value.toFixed(2));
+            editExchangeText(res.results[query].val);
+
             currenciesDb.then((db)=>{
                 const transaction = db.transaction('converted-currencies','readwrite');
                 const store = transaction.objectStore('converted-currencies', 'readwrite');
@@ -370,6 +385,7 @@ const calaculateCurrency = (floatAmount)=>{
         if(val){
             const value = val.rate * floatAmount;
             editResultText(value.toFixed(2));
+            editExchangeText(val.rate);
             return;   
         }
         else{
