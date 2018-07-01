@@ -147,12 +147,12 @@ body{
     width: 35px;
 }
 #showOfflineCurrencies{
-    position: absolute;
+    position: fixed;
     text-align: center;
     padding: 15px;
     background: #fff;
     border: none;
-    border-radius: 50%; 
+    border-radius: 48%; 
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
     right: 30px;
     cursor: pointer;
