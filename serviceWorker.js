@@ -1,4 +1,4 @@
-let currentCache = 'cc-static-v3';
+let currentCache = 'cc-static-v2';
 
 let resourcesToCache = [
     './',
