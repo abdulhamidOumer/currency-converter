@@ -13,7 +13,7 @@ const runApp = ()=>{
     registerServiceWorker();
     populateDropDown();
     handleImportantUpdates();
-    
+
     setInterval(()=>{
         handleImportantUpdates(); //Runs every two hour to check for currency change updates
     }, 2000*3600);
@@ -64,7 +64,7 @@ const registerServiceWorker = ()=>{
             return
         }
 
-        
+
         if(register.installing){
             swInstallingTracker(register.installing);
             return;
@@ -84,7 +84,7 @@ const registerServiceWorker = ()=>{
     navigator.serviceWorker.addEventListener('controllerchange', ()=> {
         //Displays the following messege when there is an update avialable or when serviceworker is changed
         snackbar('NORMAL','Update Avialable. Refreh to get the new look.');
-        setTimeout(()=>{snackbar('HIDE')},4000);    
+        setTimeout(()=>{snackbar('HIDE')},4000);
     });
 
 }
@@ -97,10 +97,10 @@ const currenciesDb = idb.open('currency-converter-db',1,(upgradeDb)=>{
         case 0:{
             //Store To Hold all the currencies avialable(updated every two hours)
             const currencyStore = upgradeDb.createObjectStore('currencies',{keyPath:"currencyName"});
-            
+
             //Store To Hold Exchange rates and currencies that a user has converted(updated every two hours)
             const converted_currencies = upgradeDb.createObjectStore('converted-currencies',{keyPath:"query"});
-            
+
             //Holds the last time the currency store was updated. useful to notify users if store wasn't updated for a long time
             upgradeDb.createObjectStore('stores-time-line',{keyPath:"storeName"});
 
@@ -111,7 +111,7 @@ const currenciesDb = idb.open('currency-converter-db',1,(upgradeDb)=>{
             converted_currencies.createIndex('by-date', 'lastUpdated');
         }
     }
-    
+
 });
 
 //Sends a message to the serviceworker to skipwaiting
@@ -211,10 +211,10 @@ const populateOfflineCurrencies = ()=>{
     }).then(recurseCurrencies=(cursor)=>{
         if(!cursor) return;
         const currency = cursor.value;
-        
+
         const divContainer = document.createElement('div');
         divContainer.className = "fromToContainer";
-        
+
         const fromLabel = document.createElement('label');
         fromLabel.className = "inline fromText";
         fromLabel.innerText = "From: ";
@@ -243,7 +243,7 @@ const populateOfflineCurrencies = ()=>{
                         return idIndex.get(currency.toCurrency);
                     }
                 }
-            }).then((val)=>{    
+            }).then((val)=>{
                 switch(i){
                     case 0:{
                         fromCurrTxt.innerText = val.currencyName;
@@ -261,7 +261,7 @@ const populateOfflineCurrencies = ()=>{
 
         return cursor.continue().then(recurseCurrencies);
     }).then(()=>{
-        
+
         return;
     });
 }
@@ -280,7 +280,7 @@ const populateDropDown = ()=>{
         const currency = cursor.value;
         for(let i=0;i < currencyDropDowns.length; i++ ){
             const option = document.createElement('option');
-            
+
             option.value = currency.id;
             option.innerHTML = currency.currencyName;
             currencyDropDowns[i].appendChild(option);
@@ -290,7 +290,7 @@ const populateDropDown = ()=>{
         return cursor.continue().then(recurseCurrencies);
     }).then(()=>{
         if(currenciesCount === 0) populateCurrenciestore(true,true);
-        else{ 
+        else{
             populateOfflineCurrencies();
             loading('HIDE');
         }
@@ -322,7 +322,7 @@ const editExchangeText = (value)=>{
 
 //Fetch the exchange rate from api and shows to the user then saves it to the offline_currencies store
 const calaculateCurrencyOnline = (amount)=>{
-    
+
     const toCurrency = document.getElementById('toCurrency');
     const toCurrencyValue = toCurrency.options[toCurrency.selectedIndex].value;
 
@@ -386,7 +386,7 @@ const calaculateCurrency = (floatAmount)=>{
             const value = val.rate * floatAmount;
             editResultText(value.toFixed(2));
             editExchangeText(val.rate);
-            return;   
+            return;
         }
         else{
             calaculateCurrencyOnline(floatAmount);
@@ -442,7 +442,7 @@ const updateFromQuery = (queries)=>{
                 const transaction = db.transaction('converted-currencies','readwrite');
                 const store = transaction.objectStore('converted-currencies', 'readwrite');
                 return store.openCursor();
-                
+
             }).then(recurseCursor=(cursor)=>{
                 if(!cursor) return;
                 let oldCurrency = cursor.value;
@@ -453,13 +453,13 @@ const updateFromQuery = (queries)=>{
                     oldCurrency.lastUpdated = new Date();
                     cursor.update(oldCurrency);
                 }
-                
+
                 return cursor.continue().then(recurseCursor);
             }).then(()=>{
                 populateOfflineCurrencies();
                 handleLastUpdatedTime();
             })
-            
+
         })
     }).catch(()=>{
         loading('HIDE');
@@ -479,12 +479,12 @@ const handleLastUpdatedTime = ()=>{
         const currentDate = new Date();
         const lastUpdated = val.lastUpdated;
         const timeDiff = Math.abs(lastUpdated.getTime() - currentDate.getTime());
-        let diffHrs = Math.abs(timeDiff / (1000 * 3600 )); 
+        let diffHrs = Math.abs(timeDiff / (1000 * 3600 ));
         diffHrs = Math.round(diffHrs);
         if(diffHrs > 3){
             snackbar('NORMAL',`It has almost been ${diffHrs} hours since exchange rates were updated. Connect to the internet to get the latest updates.`);
         }
-        
+
     })
 }
 
@@ -543,10 +543,8 @@ const handleOfflineCurrencies = ()=>{
 const handleImportantUpdates = ()=>{
     populateCurrenciestore(false);
     handleOfflineCurrencies();
-    
+
 }
 
 //Run the App
 runApp();
-
-
